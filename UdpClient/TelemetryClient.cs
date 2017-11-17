@@ -4,7 +4,6 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TelemetryHandling.UDP;
-using UdpTestApp.Models;
 
 namespace TelemetryHandling
 {
