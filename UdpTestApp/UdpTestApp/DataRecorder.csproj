@@ -47,11 +47,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="UDP\CarUDPData.cs" />
-    <Compile Include="Constants.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="UDP\UDPPacket.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
