@@ -10,5 +10,6 @@ namespace F1Telemetry.Models
     {
         public Driver Driver { get; set; }
         public Team Team { get; set; }
+        public List<CarLiveData> CarLiveData { get; set; }
     }
 }

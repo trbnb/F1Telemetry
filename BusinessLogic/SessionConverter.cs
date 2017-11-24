@@ -2,18 +2,25 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using AutoMapper;
 using TelemetryHandling.UDP;
 using F1Telemetry.Models;
 using UdpTestApp;
+using Utils;
 
 namespace BusinessLogic
 {
-    // TODO: Automapper should be used for this one
     internal class SessionConverter
     {
+        private readonly Mapper mapper = new Mapper(new MapperConfiguration(cfg =>
+        {
+            cfg.CreateMap<UDPPacket, SessionData>();
+        }));
+
         public SessionData Convert(SessionData sessionData, UDPPacket packet)
         {
-            if(sessionData == null)
+            
+            if (sessionData == null)
             {
                 sessionData = InitSessionData();
                 
@@ -45,10 +52,16 @@ namespace BusinessLogic
                     return new CarData
                     {
                         Driver = new Driver(e.DriverId, driverName),
-                        Team = new Team(e.TeamId, teamName)
+                        Team = new Team(e.TeamId, teamName),
+                        CarLiveData = new List<CarLiveData>()
                     };
                 }).ToArray();
             }
+
+            sessionData.CarData.ForEach(carData =>
+            {
+                
+            });
 
             return sessionData;
         }
@@ -56,11 +69,6 @@ namespace BusinessLogic
         private static SessionData InitSessionData() => new SessionData
         {
             SessionLiveData = new List<SessionLiveData>()
-        };
-
-        private SessionLiveData InitSessionLiveData() => new SessionLiveData
-        {
-            CarLiveData = new CarLiveData[20]
         };
     }
 }

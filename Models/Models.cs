@@ -55,7 +55,6 @@ namespace F1Telemetry.Models
         public bool IsPitLimiterOn { get; set; }
         public TimeSpan SessionTimeLeft { get; set; }
         public uint RevLightsPercentage { get; set; }
-        public CarLiveData[] CarLiveData { get; set; }
         public float Yaw { get; set; }
         public float Pitch { get; set; }
         public float Roll { get; set; }
