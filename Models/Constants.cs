@@ -8,6 +8,8 @@ namespace UdpTestApp
 {
     public static class Constants
     {
+        public const int PackageSize = 1289;
+
         public static readonly IDictionary<int, string> TRACK_IDS = new Dictionary<int, string>()
         {
             { 0, "Melbourne" },

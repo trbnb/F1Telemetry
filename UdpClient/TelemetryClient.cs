@@ -4,6 +4,7 @@ using System.Net.Sockets;
 using System.Runtime.InteropServices;
 using System.Threading.Tasks;
 using TelemetryHandling.UDP;
+using Utils;
 
 namespace TelemetryHandling
 {
@@ -16,8 +17,13 @@ namespace TelemetryHandling
         public event EventHandler<Exception> ExceptionThrown;
 
         public TelemetryClient(string ipAddress = "127.0.0.1", int port = 20777)
+            : this(IPAddress.Parse(ipAddress), port)
         {
-            udpClient = new UdpClient(new IPEndPoint(IPAddress.Parse(ipAddress), port));
+        }
+
+        public TelemetryClient(IPAddress ipAddress, int port)
+        {
+            udpClient = new UdpClient(new IPEndPoint(ipAddress, port));
         }
 
         public void StartListening()
@@ -39,29 +45,14 @@ namespace TelemetryHandling
                 {
                     var result = await udpClient.ReceiveAsync();
                     var bytes = result.Buffer;
-                    var item = ConvertToPacket<UDPPacket>(bytes);
-                    PacketReceived(this, item);
+                    var item = StructHelpers.ConvertToPacket<UDPPacket>(bytes);
+                    PacketReceived.Invoke(this, item);
                 }
                 catch(Exception e)
                 {
                     ExceptionThrown(this, e);
                 }
             }
-        }
-        
-        public static T ConvertToPacket<T>(byte[] bytes)
-            where T : struct
-        {
-            var handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);
-            var stuff = ConvertToPacket<T>(handle.AddrOfPinnedObject());
-            handle.Free();
-            return stuff;
-        }
-
-        public static T ConvertToPacket<T>(IntPtr ptr)
-            where T : struct
-        {
-            return Marshal.PtrToStructure<T>(ptr);
         }
     }
 }

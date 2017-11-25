@@ -6,11 +6,6 @@ using System.Threading.Tasks;
 
 namespace F1Telemetry.Models
 {  
-    public class SectorTimes
-    {
-        public float One { get; set; }
-        public float Two { get; set; }
-    }
     
     public class SessionLiveData
     {
@@ -38,7 +33,6 @@ namespace F1Telemetry.Models
         public FuelInfo FuelInfo { get; set; }
         public PitStatus PitStatus { get; set; }
         public Sector Sector { get; set; }
-        public SectorTimes SectorTimes { get; set; }
         public WheelInfo<float> BrakesTemperatures { get; set; }
         public WheelInfo<float> TyrePressures { get; set; }
         public TimeSpan LastLapTime { get; set; }
