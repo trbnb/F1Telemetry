@@ -23,7 +23,7 @@ namespace BusinessLogic
                 sessionData.TrackSize = packet.TrackSize;
                 sessionData.SessionType = (SessionType)packet.SessionType;
                 sessionData.TrackNumber = (int)packet.TrackNumber;
-                sessionData.Era = (Era)packet.SessionType;
+                sessionData.Era = (Era)packet.Era;
                 sessionData.PitSpeedLimit = packet.PitSpeedLimit;
                 sessionData.PlayerCarIndex = packet.PlayerCarIndex;
                 sessionData.IsSpectating = packet.IsSpectating == 1;
@@ -40,18 +40,20 @@ namespace BusinessLogic
                 {
                     var driverMap = sessionData.Era == Era.MODERN ? Constants.DRIVER_IDS : Constants.CLASSIC_DRIVER_IDS;
                     var teamsMap = sessionData.Era == Era.MODERN ? Constants.TEAM_IDS : Constants.CLASSIC_TEAM_IDS;
-                    var driverName = driverMap[e.DriverId];
+                    var driverName = driverMap.Keys.Contains(e.DriverId) ? driverMap[e.DriverId] : null;
                     var teamName = teamsMap[e.TeamId];
 
                     return new CarData
                     {
                         Driver = new Driver(e.DriverId, driverName),
                         Team = new Team(e.TeamId, teamName),
-                        CarLiveData = new List<CarLiveData>()
+                        CarLiveData = new List<CarLiveData>(),
+                        Laptimes = new List<Laptime>()
                     };
                 }).ToArray();
             }
 
+            RemoveObsoleteData(packet.Time, sessionData);
             sessionData.CarData.Join(
                 inner: packet.CarData,
                 outerKeySelector: data => data.Driver.Id,
@@ -65,7 +67,6 @@ namespace BusinessLogic
                 computeLapTimes(carUdpData.CurrentLapNum, carUdpData.Sector1Time, carUdpData.Sector2Time, carUdpData.LastLapTime, carData.Laptimes);
             });
 
-            RemoveObsoleteData(packet.Time, sessionData);
             sessionData.SessionLiveData.Add(ConvertSessionLiveData(packet));
 
             return sessionData;
@@ -174,8 +175,8 @@ namespace BusinessLogic
                 Flag = (FiaFlag) packet.VehicleFIAFlags,
                 EngineTemperature = packet.EngineTemperature,
                 AngularVelocity = new XYZ(packet.AngVelX, packet.AngVelY, packet.AngVelZ),
-                TyreTemparatures = packet.TyresTemperature.Cast<uint>().ToArray().ParseWheelInfo(),
-                TyreWear = packet.TyresWear.Cast<uint>().ToArray().ParseWheelInfo(),
+                TyreTemparatures = packet.TyresTemperature.Select(e => (uint) e).ToArray().ParseWheelInfo(),
+                TyreWear = packet.TyresWear.Select(e => (uint)e).ToArray().ParseWheelInfo(),
                 TyreCompound = (TyreCompound) packet.TyreCompound,
                 FrontBrakeBias = packet.FrontBrakeBias,
                 IsCurrentLapInvalid = packet.CurrentLapInvalid == 1,
@@ -187,7 +188,7 @@ namespace BusinessLogic
                     Exhaust = packet.ExhaustDamage,
                     Gearbox = packet.GearBoxDamage,
                     Rearwing = packet.RearWingDamage,
-                    Tyres = packet.TyresDamage.Cast<uint>().ToArray().ParseWheelInfo()
+                    Tyres = packet.TyresDamage.Select(e => (uint)e).ToArray().ParseWheelInfo()
                 },
                 IsPitLimiterOn = packet.PitLimiterStatus == 1,
                 SessionTimeLeft = packet.SessionTimeLeft.ToTimeSpan(),

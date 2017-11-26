@@ -11,7 +11,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelemetryHandling", "..\Udp
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "..\BusinessLogic\BusinessLogic.csproj", "{2E9F146C-CFAC-4765-A078-F542C8F9DD02}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "..\Utils\Utils.csproj", "{32E87394-8EC2-4A64-918A-71AA5126FFB9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "..\Utils\Utils.csproj", "{32E87394-8EC2-4A64-918A-71AA5126FFB9}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopClient", "..\DesktopClient\DesktopClient.csproj", "{4EA4B31D-765A-4768-8E79-CEB3B83014A6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -39,6 +41,10 @@ Global
 		{32E87394-8EC2-4A64-918A-71AA5126FFB9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{32E87394-8EC2-4A64-918A-71AA5126FFB9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{32E87394-8EC2-4A64-918A-71AA5126FFB9}.Release|Any CPU.Build.0 = Release|Any CPU
+		{4EA4B31D-765A-4768-8E79-CEB3B83014A6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{4EA4B31D-765A-4768-8E79-CEB3B83014A6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{4EA4B31D-765A-4768-8E79-CEB3B83014A6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{4EA4B31D-765A-4768-8E79-CEB3B83014A6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

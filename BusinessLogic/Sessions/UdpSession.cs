@@ -22,12 +22,12 @@ namespace BusinessLogic.Sessions
             telemetryClient.PacketReceived += (_, packet) => OnUdpPacketReceived(packet);
         }
 
-        protected override void Start()
+        public override void Start()
         {
             telemetryClient.StartListening();
         }
 
-        protected override void Pause()
+        public override void Pause()
         {
             telemetryClient.StopListening();
         }

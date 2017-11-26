@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Text;
 using F1Telemetry.Models;
+using Utils;
 
 namespace BusinessLogic
 {
@@ -34,7 +35,7 @@ namespace BusinessLogic
 
         public static void RemoveOldestItems<T>(this IList<T> source, float timestamp, Func<T, double> getTimestamp)
         {
-            while (getTimestamp(source[source.Count - 1]) >= timestamp)
+            while (!source.IsEmpty() && getTimestamp(source[source.Count - 1]) >= timestamp)
             {
                 source.RemoveAt(source.Count - 1);
             }

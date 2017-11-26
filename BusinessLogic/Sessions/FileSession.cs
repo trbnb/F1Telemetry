@@ -31,19 +31,19 @@ namespace BusinessLogic.Sessions
                 .ToArray();
         }
 
-        protected override void Start()
+        public override void Start()
         {
             emittingTaskCancellationTokenSource = new CancellationTokenSource();
             emittingTask = Task.Factory.StartNew(Emitting, emittingTaskCancellationTokenSource.Token);
         }
 
-        private async void Emitting()
+        private void Emitting()
         {
-            udpPackets.ForEach(packet =>
+            udpPackets.ForEach(async packet =>
             {
                 emittingTaskCancellationTokenSource.Token.ThrowIfCancellationRequested();
                 OnUdpPacketReceived(packet);
-                Task.Delay(interval);
+                await Task.Delay(interval);
             });
 
             if (loop)
@@ -52,7 +52,7 @@ namespace BusinessLogic.Sessions
             }
         }
 
-        protected override void Pause()
+        public override void Pause()
         {
             emittingTaskCancellationTokenSource.Cancel();
         }

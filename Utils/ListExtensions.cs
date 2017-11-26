@@ -8,7 +8,7 @@ namespace Utils
     {
         public static T[][] Split<T>(this T[] source, int subsize)
         {
-            if (source.Length % subsize == 0)
+            if (source.Length % subsize != 0)
             {
                 throw new ArgumentException("The array is not dividable by given subsize.");
             }
@@ -17,7 +17,7 @@ namespace Utils
 
             var targetArray = new T[targetLength][];
 
-            for (var i = 0; i < subsize; i++)
+            for (var i = 0; i < targetLength; i++)
             {
                 targetArray[i] = source.Skip(i * subsize).Take(subsize).ToArray();
             }
@@ -42,5 +42,7 @@ namespace Utils
                 index++;
             }
         }
+
+        public static bool IsEmpty<T>(this ICollection<T> source) => source.Count == 0;
     }
 }

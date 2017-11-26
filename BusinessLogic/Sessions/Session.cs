@@ -2,32 +2,41 @@
 using System.Collections.Generic;
 using System.Text;
 using F1Telemetry.Models;
+using Models;
 using TelemetryHandling.UDP;
 
 namespace BusinessLogic.Sessions
 {
     public abstract class Session
     {
-        private SessionData sessionData = null;
+        private SessionData _sessionData = null;
         public SessionData SessionData {
-            get => sessionData;
+            get => _sessionData;
             protected set
             {
-                sessionData = value;
-                SessionDataUpdated(this, sessionData);
+                _sessionData = value;
+                SessionDataUpdated?.Invoke(this, _sessionData);
             }
         }
 
         public event EventHandler<SessionData> SessionDataUpdated;
+        public event EventHandler<Exception> ExceptionThrown; 
 
-        private readonly SessionConverter sessionConverter = new SessionConverter();
+        private readonly SessionConverter _sessionConverter = new SessionConverter();
 
         protected void OnUdpPacketReceived(UDPPacket packet)
         {
-            SessionData = sessionConverter.Convert(SessionData, packet);
+            try
+            {
+                SessionData = _sessionConverter.Convert(SessionData, packet);
+            }
+            catch (Exception e)
+            {
+                ExceptionThrown?.Invoke(this, e);
+            }
         }
 
-        protected abstract void Start();
-        protected abstract void Pause();
+        public abstract void Start();
+        public abstract void Pause();
     }
 }
