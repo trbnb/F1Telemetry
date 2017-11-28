@@ -24,11 +24,13 @@ namespace BusinessLogic.Sessions
 
         public override void Start()
         {
+            IsRunning = true;
             telemetryClient.StartListening();
         }
 
         public override void Pause()
         {
+            IsRunning = false;
             telemetryClient.StopListening();
         }
     }

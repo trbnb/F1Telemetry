@@ -1,0 +1,46 @@
+﻿<UserControl x:Class="DesktopClient.UserControls.SectorTimes.SectorTimes"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:DesktopClient.UserControls.SectorTimes"
+             xmlns:converters="clr-namespace:DesktopClient.Converters"
+             mc:Ignorable="d" 
+             d:DesignHeight="128" d:DesignWidth="240">
+    
+    <UserControl.Resources>
+        <converters:TimeSpanToString x:Key="TimeSpanToString" />
+    </UserControl.Resources>
+
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="120"/>
+            <ColumnDefinition Width="120"/>
+        </Grid.ColumnDefinitions>
+
+        <Grid.RowDefinitions>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="32"/>
+            <RowDefinition Height="1"/>
+            <RowDefinition Height="32"/>
+        </Grid.RowDefinitions>
+
+        <Rectangle Grid.Row="0" Grid.Column="0" Grid.ColumnSpan="2" Fill="#eeeeee"></Rectangle>
+        <Rectangle Grid.Row="1" Grid.Column="0" Grid.ColumnSpan="2" Fill="#dddddd"></Rectangle>
+        <Rectangle Grid.Row="2" Grid.Column="0" Grid.ColumnSpan="2" Fill="#eeeeee"></Rectangle>
+        <Rectangle Grid.Row="3" Grid.Column="0" Grid.ColumnSpan="2" Fill="#000000"></Rectangle>
+        <Rectangle Grid.Row="4" Grid.Column="0" Grid.ColumnSpan="2" Fill="#dddddd"></Rectangle>
+
+        <TextBlock FontFamily="Roboto" Padding="16, 0, 0, 0" Grid.Column="0" Grid.Row="0" Text="Sector 1" VerticalAlignment="Center" FontSize="14"/>
+        <TextBlock FontFamily="Roboto" Padding="16, 0, 0, 0" Grid.Column="0" Grid.Row="1" Text="Sector 2" VerticalAlignment="Center" FontSize="14"/>
+        <TextBlock FontFamily="Roboto" Padding="16, 0, 0, 0" Grid.Column="0" Grid.Row="2" Text="Sector 3" VerticalAlignment="Center" FontSize="14"/>
+        <TextBlock FontFamily="Roboto" Padding="16, 0, 0, 0" Grid.Column="0" Grid.Row="4" Text="Total" VerticalAlignment="Center" FontSize="14"/>
+
+        <TextBlock Name="Sector1Time" FontFamily="Roboto Mono" Padding="0, 0, 16, 0" Grid.Column="1" Grid.Row="0" Text="{Binding Sector1, Converter={StaticResource TimeSpanToString}, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14"/>
+        <TextBlock Name="Sector2Time" FontFamily="Roboto Mono" Padding="0, 0, 16, 0" Grid.Column="1" Grid.Row="1" Text="{Binding Sector2, Converter={StaticResource TimeSpanToString}, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14"/>
+        <TextBlock Name="Sector3Time" FontFamily="Roboto Mono" Padding="0, 0, 16, 0" Grid.Column="1" Grid.Row="2" Text="{Binding Sector3, Converter={StaticResource TimeSpanToString}, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14"/>
+        <TextBlock Name="TotalTime" FontFamily="Roboto Mono" Padding="0, 0, 16, 0" Grid.Column="1" Grid.Row="4" Text="{Binding Total, Converter={StaticResource TimeSpanToString}, RelativeSource={RelativeSource FindAncestor, AncestorType=UserControl}}" VerticalAlignment="Center" HorizontalAlignment="Right" FontSize="14"/>
+    </Grid>
+</UserControl>
+

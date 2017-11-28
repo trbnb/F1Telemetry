@@ -20,7 +20,9 @@ namespace BusinessLogic.Sessions
         }
 
         public event EventHandler<SessionData> SessionDataUpdated;
-        public event EventHandler<Exception> ExceptionThrown; 
+        public event EventHandler<Exception> ExceptionThrown;
+
+        public bool IsRunning { get; protected set; }
 
         private readonly SessionConverter _sessionConverter = new SessionConverter();
 

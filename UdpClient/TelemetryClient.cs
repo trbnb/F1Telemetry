@@ -10,7 +10,10 @@ namespace TelemetryHandling
 {
     public class TelemetryClient
     {
-        private UdpClient udpClient;
+        private readonly IPAddress _ipAddress;
+        private readonly int _port;
+
+        private UdpClient _udpClient;
         public bool IsListening { get; private set; } = false;
 
         public event EventHandler<UDPPacket> PacketReceived;
@@ -23,17 +26,20 @@ namespace TelemetryHandling
 
         public TelemetryClient(IPAddress ipAddress, int port)
         {
-            udpClient = new UdpClient(new IPEndPoint(ipAddress, port));
+            _ipAddress = ipAddress;
+            _port = port;
         }
 
         public void StartListening()
         {
+            _udpClient = new UdpClient(new IPEndPoint(_ipAddress, _port));
             IsListening = true;
             Task.Factory.StartNew(Listen);
         }
 
         public void StopListening()
         {
+            _udpClient?.Dispose();
             IsListening = false;
         }
 
@@ -43,14 +49,20 @@ namespace TelemetryHandling
             {
                 try
                 {
-                    var result = await udpClient.ReceiveAsync();
+                    if (_udpClient == null)
+                    {
+                        StopListening();
+                        return;
+                    }
+
+                    var result = await _udpClient.ReceiveAsync();
                     var bytes = result.Buffer;
-                    var item = StructHelpers.ConvertToPacket<UDPPacket>(bytes);
-                    PacketReceived.Invoke(this, item);
+                    var item = bytes.ConvertToPacket<UDPPacket>();
+                    PacketReceived?.Invoke(this, item);
                 }
                 catch(Exception e)
                 {
-                    ExceptionThrown(this, e);
+                    ExceptionThrown?.Invoke(this, e);
                 }
             }
         }

@@ -1,17 +1,17 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 15
+# Blend for Visual Studio 15
 VisualStudioVersion = 15.0.27004.2009
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DataRecorder", "UdpTestApp\DataRecorder.csproj", "{2A9B74F6-2375-46CF-A90B-DF7BF3051103}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Models", "..\Models\Models.csproj", "{77E69BB6-49B1-4A6A-9E10-36314573F68A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Models", "..\Models\Models.csproj", "{77E69BB6-49B1-4A6A-9E10-36314573F68A}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TelemetryHandling", "..\UdpClient\TelemetryHandling.csproj", "{DEC998D0-FF53-4AC2-BF0F-42085866BFB1}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TelemetryHandling", "..\UdpClient\TelemetryHandling.csproj", "{DEC998D0-FF53-4AC2-BF0F-42085866BFB1}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BusinessLogic", "..\BusinessLogic\BusinessLogic.csproj", "{2E9F146C-CFAC-4765-A078-F542C8F9DD02}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BusinessLogic", "..\BusinessLogic\BusinessLogic.csproj", "{2E9F146C-CFAC-4765-A078-F542C8F9DD02}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Utils", "..\Utils\Utils.csproj", "{32E87394-8EC2-4A64-918A-71AA5126FFB9}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Utils", "..\Utils\Utils.csproj", "{32E87394-8EC2-4A64-918A-71AA5126FFB9}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DesktopClient", "..\DesktopClient\DesktopClient.csproj", "{4EA4B31D-765A-4768-8E79-CEB3B83014A6}"
 EndProject

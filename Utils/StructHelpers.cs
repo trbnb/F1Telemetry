@@ -7,7 +7,7 @@ namespace Utils
 {
     public static class StructHelpers
     {
-        public static T ConvertToPacket<T>(byte[] bytes)
+        public static T ConvertToPacket<T>(this byte[] bytes)
             where T : struct
         {
             var handle = GCHandle.Alloc(bytes, GCHandleType.Pinned);

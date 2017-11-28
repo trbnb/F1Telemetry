@@ -16,9 +16,8 @@ namespace BusinessLogic.Sessions
         private readonly UDPPacket[] udpPackets;
         private readonly bool loop;
         private readonly int interval;
-
-        private Task emittingTask;
-        private CancellationTokenSource emittingTaskCancellationTokenSource;
+        
+        private CancellationTokenSource _emittingTaskCancellationTokenSource;
 
         public FileSession(string absolutePath, bool loop, int interval)
         {
@@ -33,28 +32,37 @@ namespace BusinessLogic.Sessions
 
         public override void Start()
         {
-            emittingTaskCancellationTokenSource = new CancellationTokenSource();
-            emittingTask = Task.Factory.StartNew(Emitting, emittingTaskCancellationTokenSource.Token);
+            IsRunning = true;
+            _emittingTaskCancellationTokenSource = new CancellationTokenSource();
+            Task.Factory.StartNew(Emitting, _emittingTaskCancellationTokenSource.Token);
         }
 
-        private void Emitting()
+        private async void Emitting()
         {
-            udpPackets.ForEach(async packet =>
+            foreach (var udpPacket in udpPackets)
             {
-                emittingTaskCancellationTokenSource.Token.ThrowIfCancellationRequested();
-                OnUdpPacketReceived(packet);
+                if (_emittingTaskCancellationTokenSource.Token.IsCancellationRequested)
+                {
+                    return;
+                }
+                OnUdpPacketReceived(udpPacket);
                 await Task.Delay(interval);
-            });
+            }
 
             if (loop)
             {
                 Start();
             }
+            else
+            {
+                IsRunning = false;
+            }
         }
 
         public override void Pause()
         {
-            emittingTaskCancellationTokenSource.Cancel();
+            IsRunning = false;
+            _emittingTaskCancellationTokenSource?.Cancel();
         }
     }
 }
